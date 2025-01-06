@@ -1,5 +1,5 @@
 Features
-| **Realm ShieldV2.0.0**                     | ⚡RealmShield Open Src  |  Realm Shield AC ⚡ 
+| **FairplayX V1.0.0 Beta**                  | ⚡FairplayX Open Src    |  FairplayX AC ⚡ 
 | ------------------------------------------ | ----------------------- | ------------------------------------- |
 | Open source                                | ✅                      | ❌                                   |
 | Free                                       | ✅                      | ✅                                   |
