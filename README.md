@@ -1,3 +1,5 @@
+hoin the Discord Server - https://discord.gg/7bZjC6SE -
+
 Features
 | **FairplayX V1.0.0 Beta**                  | ⚡FairplayX Open Src    |  FairplayX AC ⚡ 
 | ------------------------------------------ | ----------------------- | ------------------------------------- |
