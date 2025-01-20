@@ -1,0 +1,27 @@
+{
+    "botToken": "YOUR_BOT_TOKEN_HERE",
+    "clientId": "YOUR_CLIENT_ID_HERE",
+    "username": "Eclipse AC",
+    "realms": [
+        {
+            "realmName": "Your realm name",
+            "realmCode": "Your Realm Code",
+            "logChannels": {
+                "chat": "discord channel ID",
+                "kicks": "discord channel ID",
+                "joinsAndLeaves": "discord channel ID"
+            },
+            "modules": {
+                "deviceFilter": true
+            }
+        }
+    ],
+    "admins": ["your discord ID"],
+    "whitelist": ["Your Bots name", "any username can go here"],
+    "bannedDevices": ["Windows", "Android", "iOS", "WindowsPhone", "Win32", "Dedicated", "PlayStation"],
+    "altSystem": {
+        "maxGamerScore": 500,
+        "maxFriends": 25,
+        "maxFollowers": 5
+    }
+}
