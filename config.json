@@ -18,7 +18,7 @@
     ],
     "admins": ["your discord ID"],
     "whitelist": ["Your Bots name", "any username can go here"],
-    "bannedDevices": ["Windows", "Android", "iOS", "WindowsPhone", "Win32", "Dedicated", "PlayStation"],
+    "bannedDevices": ["Windows", "Android", "iOS", "WindowsPhone", "Win32", "Dedicated"],
     "altSystem": {
         "maxGamerScore": 500,
         "maxFriends": 25,
