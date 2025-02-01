@@ -9,15 +9,14 @@ const players = new Map();
 const realmClients = new Map();
 const packetCounts = new Map();
 
-// Utility: Increment packet count for a player
-function incrementPacketCount(username, type) {
+// Utility: Track player packet activity
+function trackPacket(username, type) {
     if (!packetCounts.has(username)) {
         packetCounts.set(username, { count: 1, firstPacketTime: Date.now(), badPackets: 0 });
     } else {
         const packetInfo = packetCounts.get(username);
         packetInfo.count++;
         if (type === 'bad') packetInfo.badPackets++;
-        packetCounts.set(username, packetInfo);
     }
 }
 
@@ -27,11 +26,11 @@ function resetPacketCount(username) {
 }
 
 // Utility: Send a command to the Minecraft server
-function sendCmd(client, ...cmds) {
-    cmds.forEach((cmd) => {
+function sendCommand(client, ...commands) {
+    commands.forEach((command) => {
         try {
             client.write('command_request', {
-                command: cmd,
+                command,
                 origin: { type: 'player', uuid: uuid.v4(), request_id: uuid.v4() },
                 internal: true,
                 version: 52,
@@ -42,7 +41,7 @@ function sendCmd(client, ...cmds) {
     });
 }
 
-// Function: Spawn bot for a specific realm
+// Function: Spawn a bot for a specific realm
 async function spawnBot(realm) {
     const authFlow = new AF.Authflow(config.username, './accounts', {
         authTitle: AF.Titles.MinecraftNintendoSwitch,
@@ -59,35 +58,26 @@ async function spawnBot(realm) {
 
     realmClients.set(realm.realmCode, client);
 
-    // Event: Handle player list updates
     client.on('player_list', (packet) => {
         packet.records.records.forEach((player) => {
             const username = player.username;
             const os = player.build_platform;
-
-            // Skip checks for whitelisted users
+            
             if (config.whitelist.includes(username)) {
                 log(`Whitelisted user: ${username}`);
                 return;
             }
 
-            // Anti-device spoofing
-            if (!['', ''].includes(os)) {
-                log(`Kicking ${username} for device spoofing (${os})`);
-                sendCmd(client, `/kick "${username}" Device Spoofing Detected`);
-            }
-
-            // Anti-SSBPS
-            incrementPacketCount(username, 'normal');
+            // Check for excessive malformed packets
+            trackPacket(username, 'normal');
             const packetInfo = packetCounts.get(username);
             if (packetInfo.badPackets > 10) {
                 log(`Kicking ${username} for malformed packets`);
-                sendCmd(client, `/kick "${username}" Malformed Packets Detected`);
+                sendCommand(client, `/kick "${username}" Malformed Packets Detected`);
             }
         });
     });
 
-    // Event: Relay Minecraft chat to Discord
     client.on('text', (packet) => {
         if (!packet.needs_translation && packet.type === 'chat') {
             const message = `${packet.source_name}: ${packet.message}`;
@@ -96,19 +86,13 @@ async function spawnBot(realm) {
         }
     });
 
-    // Event: Log errors
-    client.on('error', (err) => {
-        log(`Bot error: ${err.message}`);
-    });
-
-    client.on('kick', (reason) => {
-        log(`Bot was kicked: ${reason}`);
-    });
+    client.on('error', (err) => log(`Bot error: ${err.message}`));
+    client.on('kick', (reason) => log(`Bot was kicked: ${reason}`));
 }
 
 // Function: Relay Discord messages to Minecraft
 function relayMessageFromDiscordToMinecraft(message) {
-    const realm = config.realms[0]; // Use the first realm for simplicity
+    const realm = config.realms[0]; // Default to the first realm
     const realmClient = realmClients.get(realm.realmCode);
 
     if (!realmClient) {
