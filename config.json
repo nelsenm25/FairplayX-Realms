@@ -1,23 +1,23 @@
 {
-    "botToken": "YOUR_BOT_TOKEN_HERE",
-    "clientId": "YOUR_CLIENT_ID_HERE",
-    "username": "Eclipse AC",
+    "botToken": "",
+    "clientId": "1335331258607337554",
+    "username": "Obsidian Skygen Bot#3561",
     "realms": [
         {
-            "realmName": "Your realm name",
-            "realmCode": "Your Realm Code",
+            "realmName": "Obsidian Skygen",
+            "realmCode": "grH6Wjaf-_UH4AY",
             "logChannels": {
-                "chat": "discord channel ID",
-                "kicks": "discord channel ID",
-                "joinsAndLeaves": "discord channel ID"
+                "chat": "1290813031869055016",
+                "kicks": "1290813031869055016",
+                "joinsAndLeaves": "1290813031869055016"
             },
             "modules": {
                 "deviceFilter": true
             }
         }
     ],
-    "admins": ["your discord ID"],
-    "whitelist": ["Your Bots name", "any username can go here"],
+    "admins": ["Kyleemaverick2007#0", "fboy_tecky"],
+    "whitelist": ["Obsidianbot1", "GoodCaller", "Xmas TEcky"],
     "bannedDevices": ["Windows", "Android", "iOS", "WindowsPhone", "Win32", "Dedicated"],
     "altSystem": {
         "maxGamerScore": 500,
