@@ -72,7 +72,7 @@ async function spawnBot(realm) {
             }
 
             // Anti-device spoofing
-            if (!['Nintendo', 'Xbox'].includes(os)) {
+            if (!['', ''].includes(os)) {
                 log(`Kicking ${username} for device spoofing (${os})`);
                 sendCmd(client, `/kick "${username}" Device Spoofing Detected`);
             }
